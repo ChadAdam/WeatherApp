@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -39,6 +40,7 @@ public class OpenWeatherJsonUtils {
 
         /* All temperatures are children of the "temp" object */
         //final String OWM_TEMPERATURE = "temp";
+        final String UNIT = "°F";
         final String OWM_MAIN = "main";
 
         /* All temperatures are children of the "temp" object */
@@ -132,7 +134,7 @@ public class OpenWeatherJsonUtils {
               high=obj3.getDouble("temp_min");
               low=obj3.getDouble("temp_max");
               String highLow = high+" is the high and "+low+ " is the low for the day";
-              String temp_feels_like = "The temperature is "+temperature+" but it feels like "+feelslike;
+              String temp_feels_like = "The temperature is "+kelvinToFar(temperature)+UNIT+" but it feels like "+kelvinToFar(feelslike)+UNIT;
               return_val.add(temp_feels_like);
 
            // }
@@ -189,6 +191,11 @@ public class OpenWeatherJsonUtils {
     public static ContentValues[] getFullWeatherDataFromJson(Context context, String forecastJsonStr) {
         /** This will be implemented in a future lesson **/
         return null;
+    }
+    private static String kelvinToFar(double temp){
+        double far = 1.8*(temp - 273) + 32;
+        DecimalFormat df = new DecimalFormat("####0.0");
+        return df.format(far);
     }
 }
 
