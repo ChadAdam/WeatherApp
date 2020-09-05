@@ -1,7 +1,8 @@
 package com.demo.weather;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mWeatherTV;
+    private RecyclerView mWeatherRV;
     private TextView mErrorTV;
     private ProgressBar mLoading;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-    mWeatherTV =  (TextView) findViewById(R.id.tv_weather_data);
+    mWeatherRV =  (RecyclerView) findViewById(R.id.rv_weather_data);
     mErrorTV = (TextView) findViewById(R.id.tv_weather_error);
     mLoading =  (ProgressBar) findViewById(R.id.progress_bar);
 
@@ -39,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void errorVisible(){
-            mWeatherTV.setVisibility(View.INVISIBLE);
+            mWeatherRV.setVisibility(View.INVISIBLE);
             mErrorTV.setVisibility(View.VISIBLE);
     }
     private void messageVisible(){
         mErrorTV.setVisibility(View.INVISIBLE);
-        mWeatherTV.setVisibility(View.VISIBLE);
+        mWeatherRV.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int idclicked = item.getItemId();
         if(idclicked==R.id.action_refresh){
-            mWeatherTV.setText("");
+            mWeatherRV.setText("");
             loadWeatherData();
             return true;
         }
