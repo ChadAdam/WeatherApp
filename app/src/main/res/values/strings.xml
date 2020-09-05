@@ -4,6 +4,6 @@
 
     <!-- For labelling tomorrow's forecast [CHAR LIMIT=15] -->
     <string name="tomorrow">Tomorrow</string>
-    <string name="error">Loading data failed</string>
+    <string name="error">Loading data failed. Refresh Data.</string>
     <string name="refresh">Refresh</string>
 </resources>
