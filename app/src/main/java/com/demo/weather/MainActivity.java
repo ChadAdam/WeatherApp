@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.demo.weather.utils.NetUtils;
@@ -18,17 +20,31 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mWeatherTV;
+    private TextView mErrorTV;
+    private ProgressBar mLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
     mWeatherTV =  findViewById(R.id.tv_weather_data);
+    mErrorTV = findViewById(R.id.tv_weather_error);
+    mLoading =  findViewById(R.id.progress_bar);
 
 
 
 
     loadWeatherData();
+    }
+
+    private void errorVisible(){
+            mWeatherTV.setVisibility(View.INVISIBLE);
+            mErrorTV.setVisibility(View.VISIBLE);
+    }
+    private void messageVisible(){
+        mErrorTV.setVisibility(View.INVISIBLE);
+        mWeatherTV.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -54,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, ArrayList<String>> {
-
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoading.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected ArrayList<String> doInBackground(String... urls) {
@@ -84,10 +104,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<String> s) {
+            mLoading.setVisibility(View.INVISIBLE);
         if(s != null) {
+            messageVisible();
             for (String w_string : s) {
                 mWeatherTV.append((w_string) + "\n\n\n");
             }
+        }
+        else{
+            errorVisible();
         }
 
         }
