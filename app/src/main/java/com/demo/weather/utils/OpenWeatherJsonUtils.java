@@ -102,6 +102,7 @@ public class OpenWeatherJsonUtils {
         String description;
         double temperature;
         double feelslike;
+        String location_name;
         ArrayList<String> return_val = new ArrayList<>();
 
         //for (int i = 0; i < key_count; i++) {
@@ -144,7 +145,8 @@ public class OpenWeatherJsonUtils {
         date= new Date(dateTimeMillis*1000L).toString();
         return_val.add(date);
             //}
-
+        location_name = forecastJson.getString(OWM_NAME);
+        return_val.add(location_name);
             /*
             dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * i;
             date = SunshineDateUtils.getFriendlyDateString(context, dateTimeMillis, false);

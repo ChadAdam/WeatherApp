@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-    mWeatherTV =  findViewById(R.id.tv_weather_data);
-    mErrorTV = findViewById(R.id.tv_weather_error);
-    mLoading =  findViewById(R.id.progress_bar);
+    mWeatherTV =  (TextView) findViewById(R.id.tv_weather_data);
+    mErrorTV = (TextView) findViewById(R.id.tv_weather_error);
+    mLoading =  (ProgressBar) findViewById(R.id.progress_bar);
 
 
 
