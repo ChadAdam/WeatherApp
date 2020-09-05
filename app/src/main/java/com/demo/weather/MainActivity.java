@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.demo.weather.utils.NetUtils;
@@ -29,6 +31,23 @@ public class MainActivity extends AppCompatActivity {
     loadWeatherData();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.refresh, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int idclicked = item.getItemId();
+        if(idclicked==R.id.action_refresh){
+            mWeatherTV.setText("");
+            loadWeatherData();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     private void loadWeatherData() {
         String location = PreferenceLoc.getPreferredWeatherLocation(this);
         new FetchWeatherTask().execute(location);
