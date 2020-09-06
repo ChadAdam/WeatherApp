@@ -12,9 +12,15 @@ import java.util.ArrayList;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherAdapterViewHolder> {
    ArrayList<String> mWeatherData;
+   final WeatherAdapterOnClickHandler mClickHandler;
 
-    public WeatherAdapter(){
+   public interface WeatherAdapterOnClickHandler{
+       void onClick(String weatherLine);
+    }
+
+    public WeatherAdapter(WeatherAdapterOnClickHandler clickHandler){
         //later
+        mClickHandler = clickHandler;
     }
 
     @NonNull
@@ -46,13 +52,22 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
         return mWeatherData.size();
     }
 
-    public class WeatherAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class WeatherAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Deals with item
         public final TextView mWeatherTextView;
 
         public WeatherAdapterViewHolder( View itemView) {
             super(itemView);
             mWeatherTextView = (TextView) itemView.findViewById(R.id.tv_weather_data_item);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int ad_pos = getAdapterPosition();
+            String weatherLine = mWeatherData.get(ad_pos);
+            mClickHandler.onClick(weatherLine);
+
         }
     }
 

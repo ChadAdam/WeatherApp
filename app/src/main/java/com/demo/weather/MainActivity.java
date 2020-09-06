@@ -1,5 +1,6 @@
 package com.demo.weather;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demo.weather.utils.NetUtils;
 import com.demo.weather.utils.OpenWeatherJsonUtils;
@@ -19,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WeatherAdapter.WeatherAdapterOnClickHandler {
     private RecyclerView mWeatherRV;
     private TextView mErrorTV;
     private ProgressBar mLoading;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this , LinearLayoutManager.VERTICAL, false);
     mWeatherRV.setLayoutManager(layoutManager);
     //mWeatherRV.setHasFixedSize(true);
-    mWeatherAdapter = new WeatherAdapter();
+    mWeatherAdapter = new WeatherAdapter(this);
     mWeatherRV.setAdapter(mWeatherAdapter);
 
 
@@ -76,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
     private void loadWeatherData() {
         String location = PreferenceLoc.getPreferredWeatherLocation(this);
         new FetchWeatherTask().execute(location);
+    }
+
+    @Override
+    public void onClick(String weatherLine) {
+        Context c = this;
+        Toast.makeText(c, weatherLine, Toast.LENGTH_LONG).show();
+
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, ArrayList<String>> {
