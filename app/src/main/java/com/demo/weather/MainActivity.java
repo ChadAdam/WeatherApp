@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mWeatherRV;
     private TextView mErrorTV;
     private ProgressBar mLoading;
+    private WeatherAdapter mWeatherAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
     mWeatherRV =  (RecyclerView) findViewById(R.id.rv_weather_data);
     mErrorTV = (TextView) findViewById(R.id.tv_weather_error);
     mLoading =  (ProgressBar) findViewById(R.id.progress_bar);
+
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this , LinearLayoutManager.VERTICAL, false);
+    mWeatherRV.setLayoutManager(layoutManager);
+    //mWeatherRV.setHasFixedSize(true);
+    mWeatherAdapter = new WeatherAdapter();
+    mWeatherRV.setAdapter(mWeatherAdapter);
+
 
 
 
@@ -58,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int idclicked = item.getItemId();
         if(idclicked==R.id.action_refresh){
-            mWeatherRV.setText("");
+            mWeatherAdapter.setWeatherData(null);
             loadWeatherData();
             return true;
         }
@@ -108,9 +116,7 @@ public class MainActivity extends AppCompatActivity {
             mLoading.setVisibility(View.INVISIBLE);
         if(s != null) {
             messageVisible();
-            for (String w_string : s) {
-                mWeatherTV.append((w_string) + "\n\n\n");
-            }
+           mWeatherAdapter.setWeatherData(s);
         }
         else{
             errorVisible();
