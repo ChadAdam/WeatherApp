@@ -8,7 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -103,6 +105,7 @@ public class OpenWeatherJsonUtils {
         double temperature;
         double feelslike;
         String location_name;
+        long sunriseMillis , sunsetMillis;
         ArrayList<String> return_val = new ArrayList<>();
 
         //for (int i = 0; i < key_count; i++) {
@@ -113,69 +116,56 @@ public class OpenWeatherJsonUtils {
             //int l1 = dayForecastKey.length();
            // for(int i=0;i<l1;i++) {
                 //String key = (String) dayForecastKey.keys().next();
+
+                location_name = forecastJson.getString(OWM_NAME);
+              //return_val.add(location_name);
                 JSONObject obj = forecastJson.getJSONObject(OWM_CORD);
 
                 lat = obj.getString("lat");
                 lon = obj.getString("lon");
-                String latlon = "The latitude is " + lat + " and the longitude is " + lon;
+                String latlon = "The latitude is " + lat + " and the longitude is " + lon + " ("+location_name+")";
                 return_val.add(latlon);
 
-          //  }
-            //else if(OWM_WEATHER.equals(key)){
+          
                //JSONObject obj2 = forecastJson.getJSONObject(OWM_WEATHER);
+                // Description stuff
                 JSONArray weather_json = forecastJson.getJSONArray(OWM_WEATHER);
                 JSONObject obj2 = weather_json.getJSONObject(0);
                description= obj2.getString("description");
-               return_val.add(description);
+               //return_val.add(description);
             //}
             //else if(OWM_MAIN.equals(key)){
+            // Temperature stuff
               JSONObject obj3 = forecastJson.getJSONObject(OWM_MAIN);
               temperature=obj3.getDouble("temp");
               feelslike=obj3.getDouble("feels_like");
               high=obj3.getDouble("temp_min");
               low=obj3.getDouble("temp_max");
-              String highLow = high+" is the high and "+low+ " is the low for the day";
+              String highLow = kelvinToFar(high)+UNIT+" is the high and "+kelvinToFar(low)+UNIT+ " is the low for the day with "+description+".\n";
               String temp_feels_like = "The temperature is "+kelvinToFar(temperature)+UNIT+" but it feels like "+kelvinToFar(feelslike)+UNIT;
-              return_val.add(temp_feels_like);
+              return_val.add(highLow+temp_feels_like);
 
-           // }
-            //else if("dt".equals(key)){
-        //String obj4 = forecastJson.getString("dt");
+        // Sunrise , Sunset and Current dates
         dateTimeMillis=forecastJson.getLong("dt");
         date= new Date(dateTimeMillis*1000L).toString();
-        return_val.add(date);
-            //}
-        location_name = forecastJson.getString(OWM_NAME);
-        return_val.add(location_name);
-            /*
-            dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * i;
-            date = SunshineDateUtils.getFriendlyDateString(context, dateTimeMillis, false);
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
+        JSONObject obj4 = forecastJson.getJSONObject("sys");
+        sunriseMillis=obj4.getLong("sunrise");
+        String sunrisedate= dateFormat.format(new Date(sunriseMillis*1000L));
 
-            /*
-             * Description is in a child array called "weather", which is 1 element long.
-             * That element also contains a weather code.
-             */
+        sunsetMillis=obj4.getLong("sunset");
+        String sunsetdate= dateFormat.format(new Date(sunsetMillis*1000L));
 
+        String times = "The forecast timestamp is "+date+".  "+" Sunrise is at "+sunrisedate+ " , and sunset is at "+sunsetdate+" for the day.";
+        return_val.add(times);
 
-            //JSONObject weatherObject =
-             //       dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
-            //description = weatherObject.getString(OWM_DESCRIPTION);
+        // Wind Stuff
+        JSONObject obj5 = forecastJson.getJSONObject("wind");
+        double wind_speed = obj5.getDouble("speed");
+        double wind_degree = obj5.getDouble("deg");
+        String wind = "The wind speed is "+wind_speed+" meters per second. The wind direction is "+wind_degree+"°.";
+        return_val.add(wind);
 
-            /*
-             * Temperatures are sent by Open Weather Map in a child object called "temp".
-             *
-             * Editor's Note: Try not to name variables "temp" when working with temperature.
-             * It confuses everybody. Temp could easily mean any number of things, including
-             * temperature, temporary and is just a bad variable name.
-             */
-            //JSONObject temperatureObject = dayForecast.getJSONObject(OWM_TEMPERATURE);
-            //high = temperatureObject.getDouble(OWM_MAX);
-            //low = temperatureObject.getDouble(OWM_MIN);
-           // highAndLow = SunshineWeatherUtils.formatHighLows(context, high, low);
-
-
-            //parsedWeatherData[i] = date + " - " + description + " - " + highAndLow;
-       // }
 
 
         ///return parsedWeatherData;
