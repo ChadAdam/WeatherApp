@@ -42,6 +42,7 @@ public class OpenWeatherJsonUtils {
 
         /* All temperatures are children of the "temp" object */
         //final String OWM_TEMPERATURE = "temp";
+        final String OMW_LIST = "list";
         final String UNIT = "°F";
         final String OWM_MAIN = "main";
 
@@ -92,6 +93,7 @@ public class OpenWeatherJsonUtils {
        // long localDate = System.currentTimeMillis();
         //long utcDate = DateUtils.getUTCDateFromLocal(localDate);
         //long startDay = DateUtils.normalizeDate(utcDate);
+
         String date;
         String highAndLow;
 
@@ -126,7 +128,7 @@ public class OpenWeatherJsonUtils {
                 String latlon = "The latitude is " + lat + " and the longitude is " + lon + " ("+location_name+")";
                 return_val.add(latlon);
 
-          
+
                //JSONObject obj2 = forecastJson.getJSONObject(OWM_WEATHER);
                 // Description stuff
                 JSONArray weather_json = forecastJson.getJSONArray(OWM_WEATHER);
@@ -137,12 +139,13 @@ public class OpenWeatherJsonUtils {
             //else if(OWM_MAIN.equals(key)){
             // Temperature stuff
               JSONObject obj3 = forecastJson.getJSONObject(OWM_MAIN);
+              String humid = obj3.getString("humidity")+"%";
               temperature=obj3.getDouble("temp");
               feelslike=obj3.getDouble("feels_like");
               high=obj3.getDouble("temp_min");
               low=obj3.getDouble("temp_max");
               String highLow = kelvinToFar(high)+UNIT+" is the high and "+kelvinToFar(low)+UNIT+ " is the low for the day with "+description+".\n";
-              String temp_feels_like = "The temperature is "+kelvinToFar(temperature)+UNIT+" but it feels like "+kelvinToFar(feelslike)+UNIT;
+              String temp_feels_like = "The temperature is "+kelvinToFar(temperature)+UNIT+", and the humidity is "+humid+" but it feels like "+kelvinToFar(feelslike)+UNIT;
               return_val.add(highLow+temp_feels_like);
 
         // Sunrise , Sunset and Current dates

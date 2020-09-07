@@ -11,8 +11,10 @@ import java.util.Scanner;
 
 public final class NetUtils {
     private static final String TAG = NetUtils.class.getSimpleName();
+    //http://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=dce03d5b8fb545d127379db81b33c939
     private static final String APIKey="2fdaac186de11a5dcea4aa67a4567337";
-    private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
+    //private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
+    private static final String FORCAST_URL = "http://api.openweathermap.org/data/2.5/forecast";
             //?lat=35&lon=139&appid=2fdaac186de11a5dcea4aa67a4567337
 
     private static final String format = "json";
@@ -38,8 +40,9 @@ public final class NetUtils {
      * @param locationQuery The location that will be queried for.
      * @return The URL to use to query the weather server.
      s*/
+
     public static URL buildUrl(String locationQuery) {
-        Uri builtUri = Uri.parse(WEATHER_URL).buildUpon()
+        Uri builtUri = Uri.parse(FORCAST_URL).buildUpon()
                 .appendQueryParameter(CITY_PARAM,locationQuery)
                 .appendQueryParameter(KEY_PARAM,APIKey)
                 .build();
@@ -63,7 +66,7 @@ public final class NetUtils {
      * @return The Url to use to query the weather server.
      */
     public static URL buildUrl(Double lat, Double lon) {
-        Uri builtUri = Uri.parse(WEATHER_URL).buildUpon()
+        Uri builtUri = Uri.parse(FORCAST_URL).buildUpon()
                 .appendQueryParameter(LAT_PARAM, String.valueOf(lat))
                 .appendQueryParameter(LON_PARAM, String.valueOf(lon))
                 .appendQueryParameter(KEY_PARAM,APIKey)
