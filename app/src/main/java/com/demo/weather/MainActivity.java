@@ -1,6 +1,7 @@
 package com.demo.weather;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -83,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     @Override
     public void onClick(String weatherLine) {
         Context c = this;
-        Toast.makeText(c, weatherLine, Toast.LENGTH_LONG).show();
+        //Toast.makeText(c, weatherLine, Toast.LENGTH_LONG).show();
+        Intent i = new Intent(c , DetailActivity.class);
+        startActivity(i);
 
     }
 

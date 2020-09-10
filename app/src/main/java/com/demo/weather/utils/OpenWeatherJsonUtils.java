@@ -104,7 +104,8 @@ public class OpenWeatherJsonUtils {
 
             JSONArray weather_json = current_day.getJSONArray(OWM_WEATHER);
             JSONObject obj2 = weather_json.getJSONObject(0);
-            description= obj2.getString("description");
+            String d= obj2.getString("description");
+            description= d.substring(0, 1).toUpperCase() + d.substring(1);
 
 
             JSONObject obj3 = current_day.getJSONObject(OWM_MAIN);
@@ -151,7 +152,7 @@ public class OpenWeatherJsonUtils {
             String wind = "The wind speed is "+wind_speed+" meters per second. The wind direction is "+wind_degree+"°.";
             //return_val.add(wind);
 
-            return_val.add(date2Show.format(formatedDate)+ ": "+kelvinToFar(temperature)+UNIT );
+            return_val.add(date2Show.format(formatedDate)+ ": "+kelvinToFar(temperature)+UNIT+" --"+description );
 
         }
 
