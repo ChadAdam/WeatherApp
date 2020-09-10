@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
         Context c = this;
         //Toast.makeText(c, weatherLine, Toast.LENGTH_LONG).show();
         Intent i = new Intent(c , DetailActivity.class);
+        i.putExtra(Intent.EXTRA_TEXT,weatherLine);
         startActivity(i);
 
     }
