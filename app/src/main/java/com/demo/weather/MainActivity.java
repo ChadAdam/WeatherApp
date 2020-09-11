@@ -2,6 +2,7 @@ package com.demo.weather;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.demo.weather.utils.NetUtils;
 import com.demo.weather.utils.OpenWeatherJsonUtils;
 import com.demo.weather.utils.PreferenceLoc;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.refresh, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -73,8 +74,25 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
             loadWeatherData();
             return true;
         }
+        if(idclicked==R.id.action_map){
+            openMap();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void  openMap(){
+        String address =  "1600 Ampitheatre Parkway, CA";
+        Uri.Builder builder = new Uri.Builder();
+        Uri geo = builder.scheme("geo").path("0,0").query(address).build();
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(geo);
+
+        if(i.resolveActivity(getPackageManager())!=null){
+            startActivity(i);
+        }
     }
     private void loadWeatherData() {
         String location = PreferenceLoc.getPreferredWeatherLocation(this);
