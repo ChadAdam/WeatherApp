@@ -95,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
             openMap();
             return true;
         }
+        if(idclicked==R.id.action_settings){
+            Context c = this;
+            Intent i = new Intent(c ,SettingsActivity.class);
+            startActivity(i);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
