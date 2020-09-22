@@ -17,4 +17,15 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="map">Map Location</string>
     <string name="share">Share Information</string>
+
+    <string name="edit_text_key">pref_edit_key</string>
+    <string name="edit_text_label">Location Test Label</string>
+    <string name="edit_text_default">Location</string>
+
+    <string name="list_default">Far</string>
+    <string name="list_key">pref_list_key</string>
+    <string name="list_label">Unit of Measure</string>
+
+
+    
 </resources>
