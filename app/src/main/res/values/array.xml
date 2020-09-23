@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <array name="Units_labels">
-    <item>Far</item>
-    <item>Cels</item>
+    <item>Fahrenheit</item>
+    <item>Celsius</item>
 </array>
 <array name="Units_values">
-    <item>Far Value</item>
-    <item>Cels Value</item>
+    <item>Far</item>
+    <item>Cels</item>
 </array>
 
 

@@ -8,6 +8,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 
+import com.demo.weather.utils.PreferenceLoc;
+
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     private void setPreferenceSum( Preference p , Object v){
         String value = v.toString();
@@ -33,6 +35,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             String v = sharedPreferences.getString(p.getKey(), "");
             setPreferenceSum(p , v);
         }
+
     }
 
     @Override

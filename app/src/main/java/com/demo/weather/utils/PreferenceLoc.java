@@ -1,13 +1,20 @@
 package com.demo.weather.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
+
+import com.demo.weather.R;
+import com.demo.weather.R.*;
 
 public class PreferenceLoc {
     /*
+
      * Human readable location string, provided by the API.  Because for styling,
      * "Mountain View" is more recognizable than 94043.
      */
     public static final String PREF_CITY_NAME = "city_name";
+
 
     /*
      * In order to uniquely pinpoint the location on the map when we launch the
@@ -83,6 +90,9 @@ public class PreferenceLoc {
      */
     public static boolean isMetric(Context context) {
         /** This will be implemented in a future lesson **/
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String val = sharedPreferences.getString("pref_list_key", "");
+        if(val.equals("Cels")) return false;
         return true;
     }
 
