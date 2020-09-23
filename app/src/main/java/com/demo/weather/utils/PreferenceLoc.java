@@ -79,7 +79,10 @@ public class PreferenceLoc {
      */
     public static String getPreferredWeatherLocation(Context context) {
         /** This will be implemented in a future lesson **/
-        return getDefaultWeatherLocation();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String val = sharedPreferences.getString(context.getString(string.edit_text_key), DEFAULT_WEATHER_LOCATION);
+        return val;
+        //return getDefaultWeatherLocation();
     }
 
     /**
@@ -91,7 +94,7 @@ public class PreferenceLoc {
     public static boolean isMetric(Context context) {
         /** This will be implemented in a future lesson **/
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String val = sharedPreferences.getString("pref_list_key", "");
+        String val = sharedPreferences.getString(context.getString(string.list_key), "");
         if(val.equals("Cels")) return false;
         return true;
     }
