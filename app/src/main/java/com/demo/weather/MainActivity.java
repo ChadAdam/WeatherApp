@@ -3,6 +3,7 @@ package com.demo.weather;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,12 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +37,15 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements WeatherAdapter.WeatherAdapterOnClickHandler ,
-        LoaderManager.LoaderCallbacks<ArrayList<String>> {
+        LoaderManager.LoaderCallbacks<ArrayList<String>> , SharedPreferences.OnSharedPreferenceChangeListener {
     private RecyclerView mWeatherRV;
     private TextView mErrorTV;
     private ProgressBar mLoading;
     private WeatherAdapter mWeatherAdapter;
     private final int LOADERID = 1;
     private final String QUERYEXTRAID = "q";
+    private static boolean PREFERENCES_HAVE_BEEN_UPDATED = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     }
     LoaderCallbacks<ArrayList<String>> callback = MainActivity.this;
     getSupportLoaderManager().initLoader(LOADERID, null, callback);
+    PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 
     }
 
@@ -106,16 +112,19 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     }
 
     private void  openMap(){
-        String address =  "1600 Ampitheatre Parkway, CA";
+        //String address =  "1600 Ampitheatre Parkway, CA";
+        String address =  PreferenceLoc.getPreferredWeatherLocation(this);
         Uri.Builder builder = new Uri.Builder();
-        Uri geo = builder.scheme("geo").path("0,0").query(address).build();
+        //Uri geo = builder.scheme("geo").path("0,0").appendQueryParameter("q", address).build();
+        Uri geo =  Uri.parse("geo:0,0?q=" + address);
 
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(geo);
-
+        i.setPackage("com.google.android.apps.maps");
         if(i.resolveActivity(getPackageManager())!=null){
             startActivity(i);
         }
+        else{ Log.d("ERROR", "Couldn't call " + geo.toString() + ", no receiving apps installed!");}
     }
 
 
@@ -204,4 +213,25 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     }
 
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        PREFERENCES_HAVE_BEEN_UPDATED = true;
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(PREFERENCES_HAVE_BEEN_UPDATED){
+            getSupportLoaderManager().restartLoader(LOADERID,null , this);
+            PREFERENCES_HAVE_BEEN_UPDATED = false;
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
 }
