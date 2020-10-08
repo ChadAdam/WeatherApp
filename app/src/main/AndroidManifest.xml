@@ -32,6 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".utils.WeatherProvider"
+            android:authorities="com.demo.weather"
+            android:exported="false"/>
     </application>
 
 </manifest>

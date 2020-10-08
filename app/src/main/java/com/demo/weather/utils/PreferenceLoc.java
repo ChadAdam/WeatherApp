@@ -95,8 +95,8 @@ public class PreferenceLoc {
         /** This will be implemented in a future lesson **/
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String val = sharedPreferences.getString(context.getString(string.list_key), "");
-        if(val.equals("Cels")) return false;
-        return true;
+        if(val.equals("Cels")) return true;
+        return false;
     }
 
     /**

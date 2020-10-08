@@ -43,6 +43,15 @@ import java.util.TimeZone;
             return retValNew;
         }
 
+        public static boolean isDateNormalized(long millisSinceEpoch) {
+            boolean isDateNormalized = false;
+            if (millisSinceEpoch % DAY_IN_MILLIS == 0) {
+                isDateNormalized = true;
+            }
+
+            return isDateNormalized;
+        }
+
         /**
          * Since all dates from the database are in UTC, we must convert the given date
          * (in UTC timezone) to the date in the local timezone. Ths function performs that conversion

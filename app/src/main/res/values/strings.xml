@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">DemoWeather</string>
     <string name="today">Today</string>
 
@@ -25,7 +25,34 @@
     <string name="list_default">Far</string>
     <string name="list_key">pref_list_key</string>
     <string name="list_label">Unit of Measure</string>
+    <string name="format_temperature">
+        <xliff:g id="temp">%1.0f</xliff:g>\u00B0
+    </string>
 
+    <string name="wind_label">Wind</string>
+    <!-- Wind in kph -->
+    <string name="format_wind_kmh">
+        <xliff:g id="speed">%1$1.0f</xliff:g> km/h
+        <xliff:g id="direction">%2$s</xliff:g>
+    </string>
+
+    <!-- Wind in mph -->
+    <string name="format_wind_mph">
+        <xliff:g id="speed">%1$1.0f</xliff:g> mph
+        <xliff:g id="direction">%2$s</xliff:g>
+    </string>
+
+    <string name="pressure_label">Pressure</string>
+    <!-- Pressure format -->
+    <string name="format_pressure">
+        <xliff:g id="pressure">%1.0f</xliff:g> hPa
+    </string>
+
+    <string name="humidity_label">Humidity</string>
+    <!-- Humidity format -->
+    <string name="format_humidity">
+        <xliff:g id="humidity">%1.0f</xliff:g> %%
+    </string>
 
     
 </resources>
