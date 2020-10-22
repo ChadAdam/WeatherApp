@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     //LoaderCallbacks<ArrayList<String>> callback = MainActivity.this;
     getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
     //PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-        SunshineSyncUtils.startImmediateSync(this);
+        //SunshineSyncUtils.startImmediateSync(this);
+        SunshineSyncUtils.initialize(this);
     }
 
     private void errorVisible(){
