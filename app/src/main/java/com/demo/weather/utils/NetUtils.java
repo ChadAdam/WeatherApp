@@ -1,6 +1,8 @@
 package com.demo.weather.utils;
 
+import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -105,6 +107,86 @@ public final class NetUtils {
             }
         } finally {
             urlConnection.disconnect();
+        }
+    }
+
+    /**
+     * Retrieves the proper URL to query for the weather data. The reason for both this method as
+     * well as {@link #buildUrlWithLocationQuery(String)} is two fold.
+     * <p>
+     * 1) You should be able to just use one method when you need to create the URL within the
+     * app instead of calling both methods.
+     * 2) Later in Sunshine, you are going to add an alternate method of allowing the user
+     * to select their preferred location. Once you do so, there will be another way to form
+     * the URL using a latitude and longitude rather than just a location String. This method
+     * will "decide" which URL to build and return it.
+     *
+     * @param context used to access other Utility methods
+     * @return URL to query weather service
+     */
+    public static URL getUrl(Context context) {
+        if (PreferenceLoc.isLocationLatLonAvailable(context)) {
+            double[] preferredCoordinates = PreferenceLoc.getLocationCoordinates(context);
+            double latitude = preferredCoordinates[0];
+            double longitude = preferredCoordinates[1];
+            return buildUrlWithLatitudeLongitude(latitude, longitude);
+        } else {
+            String locationQuery = PreferenceLoc.getPreferredWeatherLocation(context);
+            return buildUrlWithLocationQuery(locationQuery);
+        }
+    }
+
+    /**
+     * Builds the URL used to talk to the weather server using latitude and longitude of a
+     * location.
+     *
+     * @param latitude  The latitude of the location
+     * @param longitude The longitude of the location
+     * @return The Url to use to query the weather server.
+     */
+    private static URL buildUrlWithLatitudeLongitude(Double latitude, Double longitude) {
+        Uri weatherQueryUri = Uri.parse(FORCAST_URL).buildUpon()
+                .appendQueryParameter(LAT_PARAM, String.valueOf(latitude))
+                .appendQueryParameter(LON_PARAM, String.valueOf(longitude))
+                .appendQueryParameter(FORMAT_PARAM, format)
+                .appendQueryParameter(UNITS_PARAM, units)
+                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .appendQueryParameter(KEY_PARAM,APIKey)
+                .build();
+
+        try {
+            URL weatherQueryUrl = new URL(weatherQueryUri.toString());
+            Log.v(TAG, "URL: " + weatherQueryUrl);
+            return weatherQueryUrl;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Builds the URL used to talk to the weather server using a location. This location is based
+     * on the query capabilities of the weather provider that we are using.
+     *
+     * @param locationQuery The location that will be queried for.
+     * @return The URL to use to query the weather server.
+     */
+    private static URL buildUrlWithLocationQuery(String locationQuery) {
+        Uri weatherQueryUri = Uri.parse(FORCAST_URL).buildUpon()
+                .appendQueryParameter(CITY_PARAM, locationQuery)
+                .appendQueryParameter(FORMAT_PARAM, format)
+                .appendQueryParameter(UNITS_PARAM, units)
+                .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                .appendQueryParameter(KEY_PARAM,APIKey)
+                .build();
+
+        try {
+            URL weatherQueryUrl = new URL(weatherQueryUri.toString());
+            Log.v(TAG, "URL: " + weatherQueryUrl);
+            return weatherQueryUrl;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

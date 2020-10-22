@@ -37,6 +37,9 @@
             android:name=".utils.WeatherProvider"
             android:authorities="com.demo.weather"
             android:exported="false"/>
+
+        <service android:name=".sync.SunshineSyncIntentService"
+            android:exported="false"/>
     </application>
 
 </manifest>

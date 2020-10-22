@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.demo.weather.sync.SunshineSyncUtils;
 import com.demo.weather.utils.FakeDataUtils;
 import com.demo.weather.utils.PreferenceLoc;
 import com.demo.weather.utils.WeatherContract;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         getSupportActionBar().setElevation(0f);
-        FakeDataUtils.insertFakeData(this);
+        //FakeDataUtils.insertFakeData(this);
 
     mWeatherRV =  (RecyclerView) findViewById(R.id.rv_weather_data);
    // mErrorTV = (TextView) findViewById(R.id.tv_weather_error);
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     //LoaderCallbacks<ArrayList<String>> callback = MainActivity.this;
     getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
     //PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-
+        SunshineSyncUtils.startImmediateSync(this);
     }
 
     private void errorVisible(){

@@ -8,7 +8,7 @@ public class FormatUtils {
     private static final String LOG_TAG = FormatUtils.class.getSimpleName();
 
     public static String formatTemp(Context c ,double temp){
-        if(PreferenceLoc.isMetric(c)){
+        if(!PreferenceLoc.isMetric(c)){
             temp = (temp * 1.8) + 32;
         }
         int tempFormatType = R.string.format_temperature;

@@ -1,14 +1,18 @@
 package com.demo.weather;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 
+import com.demo.weather.sync.SunshineSyncUtils;
 import com.demo.weather.utils.PreferenceLoc;
+import com.demo.weather.utils.WeatherContract;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     private void setPreferenceSum( Preference p , Object v){
@@ -52,9 +56,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        Activity activity = getActivity();
+        if(s.equals("location")){
+            PreferenceLoc.resetLocationCoordinates(activity);
+            SunshineSyncUtils.startImmediateSync(activity);
+        }
+        else if (s.equals("units")){
+            activity.getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
+        }
+
         Preference p = findPreference(s);
         if(p !=null){
+            if(!(p instanceof CheckBoxPreference)){
             setPreferenceSum(p , sharedPreferences.getString(p.getKey(), ""));
-        }
+        }}
     }
 }

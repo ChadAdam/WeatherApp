@@ -42,8 +42,13 @@ public class PreferenceLoc {
      * @param lat      The latitude of the city
      * @param lon      The longitude of the city
      */
-    static public void setLocationDetails(Context c, String cityName, double lat, double lon) {
-        /** This will be implemented in a future lesson **/
+    static public void setLocationDetails(Context c, double lat, double lon) {
+        SharedPreferences sp = android.preference.PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putLong(PREF_COORD_LAT, Double.doubleToRawLongBits(lat));
+        editor.putLong(PREF_COORD_LONG, Double.doubleToRawLongBits(lon));
+        editor.apply();
     }
 
     /**
@@ -65,7 +70,12 @@ public class PreferenceLoc {
      * @param c Context used to get the SharedPreferences
      */
     static public void resetLocationCoordinates(Context c) {
-        /** This will be implemented in a future lesson **/
+        SharedPreferences sp = android.preference.PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.remove(PREF_COORD_LAT);
+        editor.remove(PREF_COORD_LONG);
+        editor.apply();
     }
 
     /**
@@ -83,6 +93,8 @@ public class PreferenceLoc {
         String val = sharedPreferences.getString(context.getString(string.edit_text_key), DEFAULT_WEATHER_LOCATION);
         return val;
         //return getDefaultWeatherLocation();
+
+
     }
 
     /**
@@ -108,7 +120,25 @@ public class PreferenceLoc {
      * @return An array containing the two coordinate values.
      */
     public static double[] getLocationCoordinates(Context context) {
-        return getDefaultWeatherCoordinates();
+        SharedPreferences sp = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+
+        double[] preferredCoordinates = new double[2];
+
+        /*
+         * This is a hack we have to resort to since you can't store doubles in SharedPreferences.
+         *
+         * Double.doubleToLongBits returns an integer corresponding to the bits of the given
+         * IEEE 754 double precision value.
+         *
+         * Double.longBitsToDouble does the opposite, converting a long (that represents a double)
+         * into the double itself.
+         */
+        preferredCoordinates[0] = Double
+                .longBitsToDouble(sp.getLong(PREF_COORD_LAT, Double.doubleToRawLongBits(0.0)));
+        preferredCoordinates[1] = Double
+                .longBitsToDouble(sp.getLong(PREF_COORD_LONG, Double.doubleToRawLongBits(0.0)));
+
+        return preferredCoordinates;
     }
 
     /**
@@ -119,8 +149,17 @@ public class PreferenceLoc {
      * @return true if lat/long are set
      */
     public static boolean isLocationLatLonAvailable(Context context) {
-        /** This will be implemented in a future lesson **/
-        return false;
+        SharedPreferences sp = android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean spContainLatitude = sp.contains(PREF_COORD_LAT);
+        boolean spContainLongitude = sp.contains(PREF_COORD_LONG);
+
+        boolean spContainBothLatitudeAndLongitude = false;
+        if (spContainLatitude && spContainLongitude) {
+            spContainBothLatitudeAndLongitude = true;
+        }
+
+        return spContainBothLatitudeAndLongitude;
     }
 
     private static String getDefaultWeatherLocation() {
