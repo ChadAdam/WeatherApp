@@ -60,11 +60,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
         double highInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MAX_TEMP);
         /* Read low temperature from the cursor (in degrees celsius) */
         double lowInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MIN_TEMP);
-
+        double humudity =  mCursor.getDouble(MainActivity.INDEX_WEATHER_HUM);
         String highAndLowTemperature =
                 FormatUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
 
-        String weatherSummary = dateString + " - " + highAndLowTemperature;
+        String weatherSummary = dateString + " - " + highAndLowTemperature+" "+FormatUtils.formatHumidity(mContext, humudity);
 
         weatherAdapterViewHolder.mWeatherTextView.setText(weatherSummary);
 

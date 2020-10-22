@@ -42,13 +42,16 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
             WeatherContract.WeatherEntry.COLUMN_DATE,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
+            WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
+
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
     };
 
     public static final int INDEX_WEATHER_DATE = 0;
     public static final int INDEX_WEATHER_MAX_TEMP = 1;
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
-    public static final int INDEX_WEATHER_CONDITION_ID = 3;
+    public static final int INDEX_WEATHER_HUM=3;
+    public static final int INDEX_WEATHER_CONDITION_ID = 4;
 
     private static final int ID_FORECAST_LOADER = 44;
 

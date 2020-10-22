@@ -16,6 +16,10 @@ public class FormatUtils {
 
     }
 
+    public static String formatHumidity(Context context, double humid){
+        int humidFormatType = R.string.format_humidity;
+        return String.format(context.getString(humidFormatType), humid);
+    }
     public static String formatHighLows(Context context, double high, double low) {
         long roundedHigh = Math.round(high);
         long roundedLow = Math.round(low);
