@@ -84,20 +84,19 @@ public class NotificationUtils {
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 //          TODO (3) Create an Intent with the proper URI to start the DetailActivity
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, NOT_CHANNEL_ID)
                 .setColor(ContextCompat.getColor(context,R.color.colorPrimary))
                 .setSmallIcon(smallArtResourceId)
                 .setLargeIcon(largeIcon)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(
-                        "Style 1"))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(resultPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
-
+//.setStyle(new NotificationCompat.BigTextStyle().bigText(
+//                        "Style 1"))
 //          TODO (4) Use TaskStackBuilder to create the proper PendingIntent
 
 //          TODO (5) Set the content Intent of the NotificationBuilder
