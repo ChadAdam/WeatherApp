@@ -61,15 +61,14 @@ public class SunshineSyncUtils {
                  * which the data should be synced. Please note that this end time is not
                  * guaranteed, but is more of a guideline for FirebaseJobDispatcher to go off of.
                  */
-               // .setTrigger(Trigger.executionWindow(
-                 //       SYNC_INTERVAL_SECONDS,
-                   //     SYNC_INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS))
-                .setTrigger(Trigger.executionWindow(0,30))
+                .setTrigger(Trigger.executionWindow(
+                        SYNC_INTERVAL_SECONDS,
+                        SYNC_INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS))
+                //.setTrigger(Trigger.executionWindow(0,30))
                 /*
                  * If a Job with the tag with provided already exists, this new job will replace
                  * the old one.
                  */
-                .setRecurring(true) // delete this
                 .setReplaceCurrent(true)
                 /* Once the Job is ready, call the builder's build method to return the Job */
                 .build();
@@ -127,6 +126,7 @@ public class SunshineSyncUtils {
                 cursor.close();
             }
         });
+        checkForEmpty.start();
     }
 
     public static void startImmediateSync(@NonNull final Context context){

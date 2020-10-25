@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
     //PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
         //SunshineSyncUtils.startImmediateSync(this);
         SunshineSyncUtils.initialize(this);
-        int vOreo =  Build.VERSION_CODES.O;
-        int sdkInt = Build.VERSION.SDK_INT;
 
 
     }
