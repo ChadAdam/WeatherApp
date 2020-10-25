@@ -4,8 +4,11 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.demo.weather.utils.DateUtils;
 import com.demo.weather.utils.NetUtils;
+import com.demo.weather.utils.NotificationUtils;
 import com.demo.weather.utils.OpenWeatherJsonUtils;
+import com.demo.weather.utils.PreferenceLoc;
 import com.demo.weather.utils.WeatherContract;
 
 import org.json.JSONException;
@@ -39,6 +42,19 @@ public class SunshineSyncTask {
                 weatherContentResolver.bulkInsert(
                         WeatherContract.WeatherEntry.CONTENT_URI,
                         weatherValues);
+
+                boolean notificationEnabled = PreferenceLoc.areNotificationsEnabled(context);
+                long timeSinceLastNotification = PreferenceLoc
+                        .getEllapsedTimeSinceLastNotification(context);
+                boolean oneDayPassedSinceLastNotification = false;
+
+                if (timeSinceLastNotification >= DateUtils.DAY_IN_MILLIS) {
+                    oneDayPassedSinceLastNotification = true;
+                }
+                if (notificationEnabled && oneDayPassedSinceLastNotification) {
+                    NotificationUtils.notifyUserOfNewWeather(context);
+                }
+
             }
 
         }

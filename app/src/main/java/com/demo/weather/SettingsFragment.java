@@ -36,8 +36,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         for(int i =0;i<count;i++){
             Preference p = preferenceScreen.getPreference(i);
             // Only Edit text and List Pref
+            if(!(p instanceof CheckBoxPreference)){
             String v = sharedPreferences.getString(p.getKey(), "");
-            setPreferenceSum(p , v);
+            setPreferenceSum(p , v); }
         }
 
     }

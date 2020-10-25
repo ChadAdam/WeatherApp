@@ -11,5 +11,12 @@
         android:entryValues="@array/Units_values"
         android:key="@string/list_key"
         android:title="@string/list_label" />
+ 
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="enable_notifications"
+        android:summaryOff="Not Enabled"
+        android:summaryOn="Enabled"
+        android:title="Weather Notifications" />
 
 </PreferenceScreen>

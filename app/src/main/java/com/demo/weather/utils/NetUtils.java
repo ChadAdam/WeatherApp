@@ -16,7 +16,7 @@ public final class NetUtils {
     //http://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=dce03d5b8fb545d127379db81b33c939
     private static final String APIKey="2fdaac186de11a5dcea4aa67a4567337";
     //private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
-    private static final String FORCAST_URL = "http://api.openweathermap.org/data/2.5/forecast";
+    private static final String FORCAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
             //?lat=35&lon=139&appid=2fdaac186de11a5dcea4aa67a4567337
 
     private static final String format = "json";
