@@ -2,11 +2,13 @@ package com.demo.weather;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.demo.weather.utils.DateUtils;
@@ -61,12 +63,21 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
         /* Read low temperature from the cursor (in degrees celsius) */
         double lowInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MIN_TEMP);
         double humudity =  mCursor.getDouble(MainActivity.INDEX_WEATHER_HUM);
-        String highAndLowTemperature =
-                FormatUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
 
-        String weatherSummary = dateString + " - " + highAndLowTemperature+" "+FormatUtils.formatHumidity(mContext, humudity);
+        int weatherImageId = FormatUtils.getSmallArtResourceIdForWeatherCondition(weatherId);
 
-        weatherAdapterViewHolder.mWeatherTextView.setText(weatherSummary);
+        String humidString = FormatUtils.formatHumidity(mContext, humudity);
+        String highString = FormatUtils.formatTemp(mContext, highInCelsius);
+        String lowString = FormatUtils.formatTemp(mContext, lowInCelsius);
+        //String highAndLowTemperature = FormatUtils.formatHighLows(mContext, highInCelsius, lowInCelsius);
+
+        //String weatherSummary = dateString + " - " + highAndLowTemperature+" "+FormatUtils.formatHumidity(mContext, humudity);
+        weatherAdapterViewHolder.iconView.setImageResource(weatherImageId);
+        weatherAdapterViewHolder.dateView.setText(dateString);
+        weatherAdapterViewHolder.humidity.setText(humidString);
+        weatherAdapterViewHolder.highTempView.setText(highString);
+        weatherAdapterViewHolder.lowTempView.setText(lowString);
+
 
     }
     // Gets number of items to be used by RecylerView
@@ -80,11 +91,22 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherA
 
     public class WeatherAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // Deals with item
-        public final TextView mWeatherTextView;
+        //public final TextView mWeatherTextView;
+        public ImageView iconView;
+        public TextView dateView;
+        public TextView highTempView;
+        public TextView lowTempView;
+        public TextView humidity;
 
         public WeatherAdapterViewHolder( View itemView) {
             super(itemView);
-            mWeatherTextView = (TextView) itemView.findViewById(R.id.tv_weather_data_item);
+            //mWeatherTextView = (TextView) itemView.findViewById(R.id.tv_weather_data_item);
+            iconView = (ImageView) itemView.findViewById(R.id.weather_icon);
+            highTempView = (TextView) itemView.findViewById(R.id.high_temperature);
+            lowTempView = (TextView) itemView.findViewById(R.id.low_temperature);
+            humidity = (TextView) itemView.findViewById(R.id.humidity);
+            dateView = (TextView) itemView.findViewById(R.id.date);
+
             itemView.setOnClickListener(this);
         }
 
