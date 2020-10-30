@@ -1,0 +1,4 @@
+<resources>
+
+    <bool name="today_layout">false</bool>
+</resources>
