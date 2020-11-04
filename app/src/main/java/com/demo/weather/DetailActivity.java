@@ -60,12 +60,13 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         setContentView(R.layout.activity_detail);
         //main_TV = (TextView)findViewById(R.id.tv_detail);
         //
-        icon_IV = (ImageView) findViewById(R.id.weather_icon);
-        date_TV = (TextView)findViewById(R.id.date);
+        icon_IV = (ImageView) findViewById(R.id.weather_icon_primary);
+        date_TV = (TextView)findViewById(R.id.date_primary);
         desc_TV = (TextView)findViewById(R.id.humid_primary);
-        high_TV = (TextView)findViewById(R.id.high_temperature);
-        low_TV = (TextView)findViewById(R.id.low_temperature);
-        hum_TV = (TextView)findViewById(R.id.humidity);
+        high_TV = (TextView)findViewById(R.id.high_temperature_primary);
+        low_TV = (TextView)findViewById(R.id.low_temperature_primary);
+
+        hum_TV = (TextView)findViewById(R.id.humidity_extra);
         pressure_TV = (TextView)findViewById(R.id.pressure);
         wind_TV = (TextView)findViewById(R.id.wind_measurement);
 

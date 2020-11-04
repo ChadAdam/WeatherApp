@@ -32,14 +32,16 @@
         app:layout_constraintBottom_toTopOf="@+id/pressure_label"
         app:layout_constraintLeft_toLeftOf="@+id/extra_details"
         app:layout_constraintTop_toTopOf="@+id/extra_details"
+        style="@style/DetailLabel"
         app:layout_constraintVertical_bias="0.33"/>
 
     <!-- Humidity measurement -->
     <TextView
-        android:id="@+id/humidity"
+        android:id="@+id/humidity_extra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
+        style="@style/ExtraWeatherMeasurement"
         app:layout_constraintBottom_toBottomOf="@+id/humidity_label"
         app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
         tools:text="38%"/>
@@ -54,6 +56,7 @@
         android:textColor="@color/detail_accent_label"
         app:layout_constraintBottom_toBottomOf="@+id/extra_details"
         app:layout_constraintLeft_toLeftOf="@+id/extra_details"
+        style="@style/DetailLabel"
         app:layout_constraintTop_toTopOf="@+id/extra_details"/>
 
     <!-- Pressure measurement -->
@@ -62,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
+        style="@style/ExtraWeatherMeasurement"
         app:layout_constraintBottom_toBottomOf="@+id/pressure_label"
         app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
         tools:text="995 hPa"/>
@@ -77,6 +81,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/extra_details"
         app:layout_constraintLeft_toLeftOf="@+id/extra_details"
         app:layout_constraintTop_toBottomOf="@+id/pressure_label"
+        style="@style/DetailLabel"
         app:layout_constraintVertical_bias="0.65999997"/>
 
     <!-- Wind measurement -->
@@ -87,6 +92,7 @@
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/wind_label"
         app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
+        style="@style/ExtraWeatherMeasurement"
         tools:text="4km/h NW"/>
 
 </android.support.constraint.ConstraintLayout>
