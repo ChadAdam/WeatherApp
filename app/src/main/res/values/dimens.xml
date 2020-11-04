@@ -17,4 +17,6 @@
     <dimen name="list_item_left_temp_text_view_size">48dp</dimen>
     <dimen name="list_item_date_left_margin">16dp</dimen>
     <dimen name="list_item_date_start">@dimen/list_item_date_left_margin</dimen>
+
+
 </resources>

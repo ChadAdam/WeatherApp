@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="weather_detail_ver_pad">24dp</dimen>
+    <dimen name="today_weather_list_item_ver_pad">24dp</dimen>
+    <dimen name="list_item_icon_margin_right">24dp</dimen>
+    <dimen name="list_item_icon_margin_end">@dimen/list_item_icon_margin_right</dimen>
+    <dimen name="list_item_pad_hor">24dp</dimen>
+</resources>
