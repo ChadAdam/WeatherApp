@@ -19,7 +19,7 @@
     <string name="share">Share Information</string>
 
     <string name="edit_text_key">location</string>
-    <string name="edit_text_label">Location Test Label</string>
+    <string name="edit_text_label">Location to Change</string>
     <string name="edit_text_default">New York City</string>
 
     <string name="list_default">Far</string>

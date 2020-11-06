@@ -125,10 +125,10 @@ public class MainActivity extends AppCompatActivity implements WeatherAdapter.We
           //  getSupportLoaderManager().restartLoader(LOADERID, null , this);
             //return true;
         //}
-        if(idclicked==R.id.action_map){
-            openMap();
-            return true;
-        }
+        //if(idclicked==R.id.action_map){
+          //  openMap();
+            //return true;
+        //}
         if(idclicked==R.id.action_settings){
             Context c = this;
             Intent i = new Intent(c ,SettingsActivity.class);

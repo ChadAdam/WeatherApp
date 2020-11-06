@@ -2,7 +2,6 @@ package com.demo.weather;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,10 +11,13 @@ import android.support.v4.app.ShareCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demo.weather.utils.DateUtils;
 import com.demo.weather.utils.FormatUtils;
@@ -23,9 +25,7 @@ import com.demo.weather.utils.WeatherContract;
 
 import java.util.Arrays;
 
-import static com.demo.weather.MainActivity.INDEX_WEATHER_CONDITION_ID;
-
-public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, GestureDetector.OnGestureListener  {
     //private TextView main_TV;
     private String extra;
 
@@ -53,6 +53,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     Uri mUri;
     ImageView icon_IV;
     private String mForecastSummary;
+    private GestureDetector gestureDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +84,17 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         getSupportLoaderManager().initLoader(ID_DETAIL_LOADER, null, this);
 
 
+        gestureDetector = new GestureDetector(this);
+
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.detail_menu, menu);
-       // MenuItem menuItem = menu.findItem(R.id.action_share);
+       // MenuItem menuItem1 = menu.findItem(R.id.action_share);
         //menuItem.setIntent(createShareForecastIntent());
         return true;
 
@@ -192,4 +199,81 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
 
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent downEvent, MotionEvent moveEvent, float vX, float vY) {
+        boolean result = false;
+        final int SWIPE_THRESHOLD = 100;
+        final int SWIPE_VELOCITY_THRESHOLD = 100;
+        float diffY = moveEvent.getY() - downEvent.getY();
+        float diffX = moveEvent.getX() - downEvent.getX();
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            // right or left swipe
+            if (Math.abs(diffX)> SWIPE_THRESHOLD && Math.abs(vX) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffX > 0) {
+                    onSwipeRight();
+                } else {
+                    onSwipeLeft();
+                }
+                result = true;
+            }
+        } else {
+            // up or down swipe
+            if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(vY)> SWIPE_VELOCITY_THRESHOLD) {
+                if (diffY > 0) {
+                    onSwipeBottom();
+                } else {
+                    onSwipeTop();
+                }
+                result = true;
+            }
+        }
+
+        return result;
+    }
+    private void onSwipeTop() {
+        Toast.makeText(this, "Swipe Top", Toast.LENGTH_LONG).show();
+    }
+
+    private void onSwipeBottom() {
+        Toast.makeText(this, "Swipe Bottom", Toast.LENGTH_LONG).show();
+    }
+
+    private void onSwipeLeft() {
+        Toast.makeText(this, "Swipe Left", Toast.LENGTH_LONG).show();
+    }
+
+    private void onSwipeRight() {
+        Toast.makeText(this, "Swipe Right", Toast.LENGTH_LONG).show();
+
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 }
