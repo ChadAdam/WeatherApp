@@ -1,5 +1,6 @@
 package com.demo.weather;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -268,7 +269,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void onSwipeRight() {
-        Toast.makeText(this, "Swipe Right", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Swipe Right", Toast.LENGTH_LONG).show();
+        Context c = this;
+        Intent i = new Intent(c ,ClothesActivity.class);
+        startActivity(i);
 
     }
     @Override
