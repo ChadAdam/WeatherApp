@@ -12,6 +12,13 @@
         app:layout_constraintGuide_percent="0.5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <FrameLayout
+
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/root_view">
     <ImageView
         android:id="@+id/outline1"
         android:layout_width="wrap_content"
@@ -22,5 +29,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guidline_image_outline"
         app:layout_constraintVertical_bias="0.693"
-        app:srcCompat="@drawable/image_outline" />
+        app:srcCompat="@drawable/fig1" />
+    <TextView
+        app:layout_constraintTop_toBottomOf="parent"
+
+        android:background="#408800AA"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        app:layout_constraintStart_toStartof="parent"
+        app:layout_constraintEnd_toEndof="parent"
+        />
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
